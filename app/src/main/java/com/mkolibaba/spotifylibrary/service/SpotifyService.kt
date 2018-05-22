@@ -1,7 +1,8 @@
 package com.mkolibaba.spotifylibrary.service
 
-import com.github.kittinunf.fuel.httpGet
-import com.google.gson.Gson
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.mkolibaba.spotifylibrary.model.AlbumModel
 import com.mkolibaba.spotifylibrary.model.SpotifyAlbumsModel
 import kotlinx.coroutines.experimental.async
@@ -39,19 +40,10 @@ class SpotifyService {
 
         return runBlocking {
             val body = responseFuture.await()
-            Gson().fromJson(body, SpotifyAlbumsModel::class.java)
+            jacksonObjectMapper()
+                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                    .readValue<SpotifyAlbumsModel>(body!!)
         }
-
-
-//        return runBlocking {
-//            val (request, response, result) = async {
-//                url.httpGet(listOf(
-//                        Pair("Accept", "application/json"),
-//                        Pair("Content-Type", "application/json"),
-//                        Pair("Authorization", "Bearer $accessToken"))).responseString()
-//            }.await()
-//            Gson().fromJson(result.get(), SpotifyAlbumsModel::class.java)
-//        }
     }
 
     fun buildUrl(url: String, parameters: HashMap<String, Any>): String {

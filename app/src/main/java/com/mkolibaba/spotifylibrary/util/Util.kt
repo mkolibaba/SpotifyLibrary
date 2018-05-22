@@ -7,6 +7,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.runBlocking
 import java.net.URL
+import java.util.*
 
 class Util {
     companion object {
@@ -28,6 +29,16 @@ class Util {
             return runBlocking {
                 bitmapFuture.await()
             }
+        }
+
+        fun randomString(length: Int): String {
+            val chars = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm"
+            var result = ""
+            val rnd = Random()
+            for (i in 0..length) {
+                result += chars[rnd.nextInt(chars.length)]
+            }
+            return result
         }
     }
 }

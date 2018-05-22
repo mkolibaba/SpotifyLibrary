@@ -1,6 +1,10 @@
 package com.mkolibaba.spotifylibrary.model
 
+import com.mkolibaba.spotifylibrary.util.Util
+
 data class AlbumModel(val artists: List<Artist>, val name: String, val images: List<AlbumImage>) {
+    val imageId: String = Util.randomString(15)
+
     val artist: String
         get() = artists[0].name
 
@@ -17,6 +21,7 @@ data class AlbumModel(val artists: List<Artist>, val name: String, val images: L
         MEDIUM(1),
         SMALL(2)
     }
+
 }
 
 data class Artist(val name: String)
