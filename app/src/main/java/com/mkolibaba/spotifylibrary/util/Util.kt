@@ -33,12 +33,9 @@ class Util {
 
         fun randomString(length: Int): String {
             val chars = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm"
-            var result = ""
             val rnd = Random()
-            for (i in 0..length) {
-                result += chars[rnd.nextInt(chars.length)]
-            }
-            return result
+            return IntArray(length, { _ -> rnd.nextInt(chars.length) })
+                    .map { chars[it] }.joinToString()
         }
     }
 }
